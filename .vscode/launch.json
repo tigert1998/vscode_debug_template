@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Remote Android Native",
+            "type": "cppdbg",
+            "miDebuggerServerAddress": "localhost:5039",
+            "request": "launch",
+            "program": "[todo] local program path",
+            "MIMode": "gdb",
+            "preLaunchTask": "Setup Remote Android GDB Server",
+            "cwd": "${workspaceFolder}",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "[todo] local ndk gdb path, like ?/prebuilt/linux-x86_64/bin/gdb"
+        },
+        {
+            "name": "Debug Local",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "[todo] local program path",
+            "args": [
+               "[todo] args"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Setup Remote Android GDB Server",
+            "command": "[todo] local python path",
+            "args": [
+                "${workspaceFolder}/.vscode/deploy.py",
+                "[todo] args"
+            ]
+        }
+    ],
+    "version": "2.0.0"
+}
