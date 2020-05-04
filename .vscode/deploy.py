@@ -3,8 +3,6 @@ import sys
 import subprocess
 from typing import Optional
 
-SSH_ADDR = "[todo] user@ip"
-REMOTE_TMP_FOLDER = "[todo] path/to/tmp"
 ADB_ADDR = "[todo] adb serial number"
 
 
@@ -12,50 +10,16 @@ def copy(local_bin_path: str, remote_bin_name: Optional[str] = None):
     if remote_bin_name is None:
         remote_bin_name = os.path.basename(local_bin_path)
 
-    assert 0 == os.system("{} {} {}".format(
-        "/usr/bin/scp",
-        local_bin_path,
-        "{}:\"{}/{}\"".format(
-            SSH_ADDR, REMOTE_TMP_FOLDER, remote_bin_name
-        )
-    ))
+    cmd = f"adb -s {ADB_ADDR} push {local_bin_path} /data/local/tmp/{remote_bin_name}"
+    assert 0 == os.system(cmd)
 
-    p = subprocess.Popen(
-        [
-            "/usr/bin/ssh", SSH_ADDR,
-            "adb -s {} push {} {}".format(
-                ADB_ADDR,
-                "{}/{}".format(
-                    REMOTE_TMP_FOLDER, remote_bin_name
-                ),
-                "/data/local/tmp"
-            )
-        ],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE
-    )
-    print(p.communicate(bytes("", 'utf-8'))[0].decode('utf-8'))
-
-    p = subprocess.Popen(
-        [
-            "/usr/bin/ssh", SSH_ADDR,
-            "adb -s {} shell chmod +x {}".format(
-                ADB_ADDR,
-                "/data/local/tmp/{}".format(remote_bin_name)
-            )
-        ],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE
-    )
-    print(p.communicate(bytes("", 'utf-8'))[0].decode('utf-8'))
+    cmd = f"adb -s {ADB_ADDR} shell chmod +x /data/local/tmp/{remote_bin_name}"
+    assert 0 == os.system(cmd)
 
 
 def setup_gdb_server(remote_bin_name: str, args):
     p = subprocess.Popen(
-        [
-            "/usr/bin/ssh", SSH_ADDR,
-            "adb -s {} shell".format(ADB_ADDR)
-        ],
+        ["adb", "-s", ADB_ADDR, "shell"],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE
     )
@@ -73,6 +37,6 @@ def setup_gdb_server(remote_bin_name: str, args):
 
 
 if __name__ == "__main__":
-    # copy("[todo] local program path", "[todo] remote program basename")
+    copy("[todo] local program path", "[todo] remote program basename")
 
     setup_gdb_server("[todo] remote program basename", sys.argv[1:])
