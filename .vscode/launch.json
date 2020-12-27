@@ -28,7 +28,7 @@
             "request": "launch",
             "program": "[todo] local program path",
             "args": [
-               "[todo] args"
+                "[todo] args"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -40,6 +40,11 @@
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
+                },
+                {
+                    "description": "Set solib-absolute-prefix",
+                    "text": "-gdb-set sysroot ${workspaceFolder}/.vscode/solibs_cache",
+                    "ignoreFailures": true,
                 }
             ],
             "miDebuggerPath": "/usr/bin/gdb"

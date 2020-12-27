@@ -7,6 +7,7 @@ from typing import Optional
 ADB = "adb"
 ADB_ADDR = "[todo] adb serial number"
 GDB_SERVER = "/data/local/tmp/gdbserver"
+PORT = 5039
 
 
 def copy(local_bin_path: str, remote_bin_name: Optional[str] = None):
@@ -29,7 +30,7 @@ def setup_gdb_server(remote_bin_name: str, ld_library_path: Optional[str], args)
     gdbserver_setup_cmd = "{} {} :{} {} {}".format(
         f"LD_LIBRARY_PATH={ld_library_path}" if ld_library_path else "",
         GDB_SERVER,
-        "5039",
+        PORT,
         "/data/local/tmp/{}".format(remote_bin_name),
         " ".join(args + [
             ">/dev/null", "2>&1", "&"
